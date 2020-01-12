@@ -1,0 +1,38 @@
+sudo: requierd
+services:
+  - docker
+
+before_install:
+  - docker build -t gadshaked/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true gadshaked/react-test npm test -- --coverage
+
+after-success:
+  - docker build -t gadshaked/multi-client ./client
+  - docker build -t gadshaked/multi-nginx ./niginx
+  - docker build -t gadshaked/server ./server
+  - docker build -t gadshaked/multi-worker ./worker
+# Log in to the docker CLI
+- echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+- docker push gadshaked/multi-client
+- docker push gadshaked/multi-nginx
+- docker push gadshaked/multi-server
+- docker push gadshaked/multi-worker
+
+# Take those images and push them to docker hub
+
+# Deploy to AWS
+# deploy:
+#   provider: elasticbeanstalk
+#   region: "us-east-2"
+#   app: "docker-react"
+#   env: "DockerReact-env"
+#   bucket_name: "elasticbeanstalk-us-east-2-342896481456"
+#   bucket_path: "docker-react"
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key:
+#     secure: "$AWS_SECRET_KEY"
+#   # On
+#   on:
+#     branch: master

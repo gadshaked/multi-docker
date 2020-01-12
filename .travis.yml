@@ -1,4 +1,4 @@
-sudo: required
+sudo: requierd
 services:
   - docker
 
@@ -6,7 +6,11 @@ before_install:
   - docker build -t gadshaked/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true gadshaked/react-test npm test
+  - docker run -e CI=true gadshaked/docker-react npm run test -- --coverage
+
+
+# script:
+#   - docker run -e CI=true gadshaked/react-test npm test
     
 
 #after-success:

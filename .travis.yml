@@ -11,16 +11,3 @@ script:
 
 script:
   - docker run -e CI=true gadshaked/docker-react npm run test -- --coverage
-
-
-after-success:
- - docker build -t gadshaked/multi-client ./client
- - docker build -t gadshaked/multi-nginx ./niginx
- - docker build -t gadshaked/server ./server
- - docker build -t gadshaked/multi-worker ./worker
-# Log in to the docker CLI
-- echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
-- docker push gadshaked/multi-client
-- docker push gadshaked/multi-nginx
-- docker push gadshaked/multi-server
-- docker push gadshaked/multi-worker

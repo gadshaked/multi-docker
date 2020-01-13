@@ -14,7 +14,7 @@ after-success:
   - docker build -t gadshaked/server ./server
   - docker build -t gadshaked/multi-worker ./worker
 
-  - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push gadshaked/multi-client
   - docker push gadshaked/multi-nginx
   - docker push gadshaked/multi-server

@@ -8,7 +8,6 @@ before_install:
 script:
   - docker run -e CI=true gadshaked/react-test npm test
 
-
 after-success:
   - docker build -t gadshaked/multi-client ./client
   - docker build -t gadshaked/multi-nginx ./niginx

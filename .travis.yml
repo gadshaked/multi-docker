@@ -21,3 +21,4 @@ after-success:
   - docker push gadshaked/multi-worker
 
   #Log in to the docker CLI
+  
